@@ -7,6 +7,10 @@
 		"vscode": "^1.43.0"
 	},
 	"publisher": "magicShochu",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AmazingFrog/grep"
+	},
 	"categories": [
 		"Other"
 	],
