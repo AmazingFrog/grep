@@ -5,22 +5,55 @@ import * as vscode from 'vscode';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "grep" is now active!');
-
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('grep.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+	let dis1 = vscode.commands.registerTextEditorCommand("grep.findRaw",async (textEdit,edit) => {
+		//获取输入的需要查找的原始文本
+		var out = vscode.window.showInputBox();
+		let searhStr = await out.then<string|undefined>(function (s:string|undefined):string|undefined{
+			return s;
+		});
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from grep!');
+		if(searhStr != undefined){
+			//文本查找
+			var text:string[] = [];
+			for(let i=0;i<textEdit.document.lineCount;++i){
+				let currentText = textEdit.document.lineAt(i).text;
+				if(currentText.includes(searhStr)){
+					text.push(currentText);
+				}
+			}
+
+			//写入新文件展示结果
+			await vscode.commands.executeCommand("workbench.action.files.newUntitledFile");
+			let s = text.join("\n");
+			let newEdit = vscode.window.activeTextEditor
+			console.log(newEdit?.document.fileName);
+			if(newEdit){
+				newEdit.edit((edit:vscode.TextEditorEdit) => {
+					if(newEdit){
+						edit.insert(new vscode.Position(newEdit.document.lineCount,0), s);
+					}
+				});
+			}
+		}
 	});
 
-	context.subscriptions.push(disposable);
+	let dis2 = vscode.commands.registerTextEditorCommand("grep.findReg",(textEdit,edit) => {
+		var out = vscode.window.showInputBox();
+		out.then<string>(function (a:string|undefined):string{
+			if(a){
+				const allText = textEdit.document.getText();
+				vscode.window.showInformationMessage(a+textEdit.document.getText());
+			}
+
+			return "resolve";
+		});
+	})
+
+	context.subscriptions.push(dis1);
+	context.subscriptions.push(dis2);
 }
 
 // this method is called when your extension is deactivated

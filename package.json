@@ -4,20 +4,20 @@
 	"description": "grep on vscode",
 	"version": "0.0.1",
 	"engines": {
-		"vscode": "^1.45.0"
+		"vscode": "^1.43.0"
 	},
 	"categories": [
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:grep.helloWorld"
+		"onCommand:grep.findRaw"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "grep.helloWorld",
-				"title": "Hello World"
+				"command": "grep.findRaw",
+				"title": "grep.findRaw"
 			}
 		]
 	},
@@ -30,7 +30,7 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.45.0",
+		"@types/vscode": "^1.43.0",
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
