@@ -2,7 +2,7 @@
 	"name": "grep",
 	"displayName": "grep",
 	"description": "grep on vscode",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"engines": {
 		"vscode": "^1.43.0"
 	},
@@ -15,7 +15,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:grep.findRaw"
+		"onCommand:grep.findRaw",
+		"onCommand:grep.findReg"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -23,6 +24,10 @@
 			{
 				"command": "grep.findRaw",
 				"title": "grep.findRaw"
+			},
+			{
+				"command": "grep.findReg",
+				"title": "grep.findReg"
 			}
 		]
 	},
@@ -36,15 +41,6 @@
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.43.0",
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^7.0.2",
-		"@types/node": "^13.11.0",
-		"eslint": "^6.8.0",
-		"@typescript-eslint/parser": "^2.30.0",
-		"@typescript-eslint/eslint-plugin": "^2.30.0",
-		"glob": "^7.1.6",
-		"mocha": "^7.1.2",
-		"typescript": "^3.8.3",
-		"vscode-test": "^1.3.0"
+		"typescript": "^3.8.3"
 	}
 }

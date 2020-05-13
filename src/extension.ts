@@ -10,14 +10,14 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let dis1 = vscode.commands.registerTextEditorCommand("grep.findRaw",async (textEdit,edit) => {
 		//获取输入的需要查找的原始文本
-		var out = vscode.window.showInputBox();
+		let out = vscode.window.showInputBox();
 		let searhStr = await out.then<string|undefined>(function (s:string|undefined):string|undefined{
 			return s;
 		});
 
 		if(searhStr != undefined){
+			let text:string[] = [];
 			//文本查找
-			var text:string[] = [];
 			for(let i=0;i<textEdit.document.lineCount;++i){
 				let currentText = textEdit.document.lineAt(i).text;
 				if(currentText.includes(searhStr)){
@@ -29,27 +29,42 @@ export function activate(context: vscode.ExtensionContext) {
 			await vscode.commands.executeCommand("workbench.action.files.newUntitledFile");
 			let s = text.join("\n");
 			let newEdit = vscode.window.activeTextEditor
-			console.log(newEdit?.document.fileName);
-			if(newEdit){
-				newEdit.edit((edit:vscode.TextEditorEdit) => {
-					if(newEdit){
-						edit.insert(new vscode.Position(newEdit.document.lineCount,0), s);
-					}
-				});
-			}
+			newEdit?.edit((edit:vscode.TextEditorEdit) => {
+				if(newEdit){
+					edit.insert(new vscode.Position(newEdit?.document.lineCount,0), s);
+				}
+			});
 		}
 	});
 
-	let dis2 = vscode.commands.registerTextEditorCommand("grep.findReg",(textEdit,edit) => {
-		var out = vscode.window.showInputBox();
-		out.then<string>(function (a:string|undefined):string{
-			if(a){
-				const allText = textEdit.document.getText();
-				vscode.window.showInformationMessage(a+textEdit.document.getText());
+	let dis2 = vscode.commands.registerTextEditorCommand("grep.findReg",async (textEdit,edit) => {
+		//获取正则文本
+		let out = vscode.window.showInputBox();
+		let regStr = await out.then<string|undefined>(function (s:string|undefined):string|undefined{
+			return s;
+		});
+
+		if(regStr != undefined){
+			let text:string[] = [];
+			let reg = new RegExp(regStr);
+			//正则文本查找
+			for(let i=0;i<textEdit.document.lineCount;++i){
+				let currentText = textEdit.document.lineAt(i).text;
+				if(reg.test(currentText)){
+					text.push(currentText);
+				}
 			}
 
-			return "resolve";
-		});
+			//写入新文件展示结果
+			await vscode.commands.executeCommand("workbench.action.files.newUntitledFile");
+			let s = text.join("\n");
+			let newEdit = vscode.window.activeTextEditor
+			newEdit?.edit((edit:vscode.TextEditorEdit) => {
+				if(newEdit){
+					edit.insert(new vscode.Position(newEdit?.document.lineCount,0), s);
+				}
+			});
+		}
 	})
 
 	context.subscriptions.push(dis1);

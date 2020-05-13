@@ -5,12 +5,14 @@
 
 ## 使用方法
 1. 在编辑区打开命令(ctrl + shift + p)
-1. 输入 "grep.findRaw"
-1. 输入需要查找原始字符串
+1. 输入 "grep.findRaw" 或 "grep.findReg"
+1. 输入需要查找字符串
 
 ## 版本
 ### 1.0.0
 实现了原始字符串的搜索
+### 1.1.0
+实现了正则字符串的搜索
 
 ## github地址
 [github](https://github.com/AmazingFrog/grep)
