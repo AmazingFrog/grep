@@ -2,9 +2,9 @@
 	"name": "grep",
 	"displayName": "grep",
 	"description": "grep on vscode",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"engines": {
-		"vscode": "^1.43.0"
+		"vscode": "^1.74.1"
 	},
 	"publisher": "magicShochu",
 	"repository": {
@@ -14,10 +14,7 @@
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"onCommand:grep.findRaw",
-		"onCommand:grep.findReg"
-	],
+	"activationEvents": [],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
@@ -40,7 +37,10 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.43.0",
-		"typescript": "^3.8.3"
+		"typescript": "^3.8.3",
+		"vscode": "^1.74.1"
+	},
+	"dependencies": {
+		
 	}
 }
